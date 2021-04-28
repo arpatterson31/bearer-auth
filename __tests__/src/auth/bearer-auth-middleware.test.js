@@ -6,7 +6,7 @@ require('@code-fellows/supergoose');
 const middleware = require('../../../src/auth/middleware/bearer.js');
 const Users = require('../../../src/auth/models/users.js');
 const jwt = require('jsonwebtoken');
-const e = require('express');
+
 
 let users = {
   admin: { username: 'admin', password: 'password' }
@@ -41,7 +41,7 @@ describe('Auth Middleware', () => {
 
     it('logs in a user with a proper token', () => {
       const user = { username: 'admin' };
-      const token = jwt.sign(user, process.env.APP_SECRET);
+      const token = jwt.sign(user, process.env.SECRET);
 
       req.headers = {
         authorization: `Bearer ${token}`
