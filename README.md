@@ -10,6 +10,9 @@
 - [ci/cd](https://github.com/arpatterson31/bearer-auth/actions)
 - [Pull Request dev to main](https://github.com/arpatterson31/bearer-auth/pull/1)
 
+- [adding expiresIn in JWT](https://github.com/auth0/node-jsonwebtoken)
+- [Another source talking about adding an expire on JWT](https://stackoverflow.com/questions/45207104/how-to-set-jwt-token-expiry-time-to-maximum-in-nodejs)
+
 ### Setup
 
 #### `.env` requirements (when applicable)

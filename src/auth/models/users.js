@@ -15,12 +15,14 @@ users.virtual('token').get(function () {
   let tokenObject = {
     username: this.username
   }
-  return jwt.sign(tokenObject, process.env.SECRET); // bug needs APP secret as 2nd param
-});
+  return jwt.sign(tokenObject, process.env.SECRET, { expiresIn: '2h' }); // bug needs APP secret as 2nd param
+}); // 
 
 users.pre('save', async function () {
-  this.password = await bcrypt.hash(this.password, 10);
-}); // bug added await and removed the ismodified
+  if(this.isModified('password')) {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
+}); // bug added await
 
 // Basic Auth
 users.statics.authenticateBasic = async function (username, password) {
