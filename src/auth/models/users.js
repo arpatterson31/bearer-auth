@@ -3,6 +3,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken'); // bug need to bring in jwt
+require('dotenv').config(); // bug, need to bring in dotenv for app secret in .env file
 
 const users = new mongoose.Schema({
   username: { type: String, require: true, unique: true },
@@ -14,14 +15,12 @@ users.virtual('token').get(function () {
   let tokenObject = {
     username: this.username
   }
-  return jwt.sign(tokenObject, process.env.APP_SECRET); // bug needs APP secret as 2nd param
+  return jwt.sign(tokenObject, process.env.SECRET); // bug needs APP secret as 2nd param
 });
 
 users.pre('save', async function () {
-  if(this.isModified('password')) {
-    this.password = bcrypt.hash(this.password, 10);
-  }
-});
+  this.password = await bcrypt.hash(this.password, 10);
+}); // bug added await and removed the ismodified
 
 // Basic Auth
 users.statics.authenticateBasic = async function (username, password) {
@@ -34,8 +33,8 @@ users.statics.authenticateBasic = async function (username, password) {
 // Bearer Auth
 users.statics.authenticateWithToken = async function (token) {
   try {
-    const parsedToken = jwt.verify(token, process.env.APP_SECRET);
-    const user = this.findOne({ username: parsedToken.username });
+    const parsedToken = await jwt.verify(token, process.env.SECRET);
+    const user = await this.findOne({ username: parsedToken.username });
     if (user) { return user; }
     throw new Error('User Not Found');
   } catch (e) {

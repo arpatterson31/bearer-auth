@@ -2,6 +2,7 @@
 
 // Start up DB Server
 const mongoose = require('mongoose');
+require('dotenv').config(); // bug, need to bring in dotenv for uri and port in .env file
 const options = {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -11,4 +12,4 @@ const options = {
 mongoose.connect(process.env.MONGODB_URI, options);
 
 //Start the web server
-require('./src/server.js').start(process.env.PORT);
+require('./src/server.js').startup(process.env.PORT); // bug - called startup in server file, not start

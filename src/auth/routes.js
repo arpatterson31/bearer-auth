@@ -3,7 +3,7 @@
 const express = require('express');
 const authRouter = express.Router();
 
-const User = require('./models/user.js');
+const User = require('./models/users.js');
 const basicAuth = require('./middleware/basic.js');
 const bearerAuth = require('./middleware/bearer.js');
 
@@ -15,7 +15,7 @@ authRouter.post('/signup', async (req, res, next) => {
       user: userRecord,
       token: userRecord.token
     };
-    res.status(200).json(output);
+    res.status(201).json(output);
   } catch (e) {
     next(e.message);
   }
@@ -39,4 +39,4 @@ authRouter.get('/secret', bearerAuth, async (req, res, next) => {
   res.status(200).send('Welcome to the secret area!');
 });
 
-module.exports = authRouter
+module.exports = authRouter;
