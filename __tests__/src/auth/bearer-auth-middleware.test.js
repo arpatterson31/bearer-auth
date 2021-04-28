@@ -1,6 +1,6 @@
 'use strict';
 
-process.env.APP_SECRET = "toes";
+process.env.SECRET = "toes";
 
 require('@code-fellows/supergoose');
 const middleware = require('../../../src/auth/middleware/bearer.js');
@@ -49,7 +49,7 @@ describe('Auth Middleware', () => {
 
       return middleware(req, res, next)
         .then(() => {
-          expect(next).toHaveBeenCalledWith();
+          expect(next).toHaveBeenCalled();
         });
     });
   });
