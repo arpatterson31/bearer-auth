@@ -1,4 +1,4 @@
-# Lab: Class 06
+# Lab: Class 07
 
 ## Project: bearer-auth
 
